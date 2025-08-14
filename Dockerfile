@@ -39,6 +39,8 @@ COPY ./docker/supervisor/supervisord.conf /etc/supervisor/conf.d/supervisord.con
 COPY ./docker/nginx/nginx.conf /etc/nginx/sites-available/default
 COPY ./docker/php/www.conf /usr/local/etc/php-fpm.d/www.conf
 
+RUN ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+
 # Buat direktori untuk socket dan atur izinnya
 RUN mkdir -p /var/run/php-fpm
 RUN chown -R www-data:www-data /var/run/php-fpm
