@@ -37,6 +37,8 @@ RUN composer install --optimize-autoloader --no-dev
 COPY ./docker/supervisor/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY ./docker/nginx/nginx.conf /etc/nginx/sites-available/default
 
+COPY ./docker/php/www.conf /usr/local/etc/php-fpm.d/www.conf
+
 RUN mkdir -p /var/run/php-fpm
 RUN chown -R www-data:www-data /var/run/php-fpm
 
