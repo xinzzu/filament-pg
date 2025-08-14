@@ -5,7 +5,6 @@ FROM php:8.2-fpm
 WORKDIR /var/www/html
 
 # Install dependensi sistem dan ekstensi PHP yang dibutuhkan Laravel
-# Termasuk dependensi untuk zip dan intl
 RUN apt-get update && apt-get install -y \
     git \
     curl \
@@ -27,7 +26,7 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Salin file proyek
 COPY . .
 
-# Install dependensi Composer (hanya sekali)
+# Install dependensi Composer
 RUN composer install --optimize-autoloader --no-dev
 
 # Atur izin folder setelah vendor diinstal
@@ -39,6 +38,12 @@ COPY ./docker/supervisor/supervisord.conf /etc/supervisor/conf.d/supervisord.con
 COPY ./docker/nginx/nginx.conf /etc/nginx/sites-available/default
 COPY ./docker/php/www.conf /usr/local/etc/php-fpm.d/www.conf
 
+# ===================================================
+# PERBAIKAN UTAMA ADA DI DUA BARIS INI
+# 1. Hapus link default yang sudah ada
+# 2. Buat link baru ke konfigurasi kita
+# ===================================================
+RUN rm /etc/nginx/sites-enabled/default
 RUN ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 
 # Buat direktori untuk socket dan atur izinnya
