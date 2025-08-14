@@ -37,6 +37,9 @@ RUN composer install --optimize-autoloader --no-dev
 COPY ./docker/supervisor/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY ./docker/nginx/nginx.conf /etc/nginx/sites-available/default
 
+RUN mkdir -p /var/run/php-fpm
+RUN chown -R www-data:www-data /var/run/php-fpm
+
 # Expose port 80 untuk Nginx
 EXPOSE 80
 
