@@ -27,10 +27,10 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Salin file proyek
 COPY . .
 
-# Install dependensi Composer (hanya sekali)
+# Install dependensi Composer
 RUN composer install --optimize-autoloader --no-dev
 
-# Atur izin folder setelah vendor diinstal
+# Atur izin folder setelah vendor diinstal (DENGAN PATH YANG BENAR)
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
