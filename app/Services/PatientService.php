@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Models\Patient;
 use Carbon\Carbon;
-use Str;
+use Illuminate\Support\Str;
 
 class PatientService
 {
