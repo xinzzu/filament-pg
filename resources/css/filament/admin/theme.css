@@ -1,0 +1,6 @@
+@import '/vendor/filament/filament/resources/css/app.css';
+
+/* Custom Filament styles */
+body {
+    font-family: system-ui, -apple-system, sans-serif;
+}
