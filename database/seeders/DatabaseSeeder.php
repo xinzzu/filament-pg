@@ -13,18 +13,24 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Create admin user
-        User::factory()->create([
-            'name' => 'Admin User',
-            'email' => 'admin@example.com',
-            'password' => bcrypt('password123'),
-        ]);
+        // Create admin user manually (without factory to avoid Faker dependency)
+        if (!User::where('email', 'admin@example.com')->exists()) {
+            User::create([
+                'name' => 'Admin User',
+                'email' => 'admin@example.com',
+                'password' => bcrypt('password123'),
+                'email_verified_at' => now(),
+            ]);
+        }
 
-        // Create test user
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-            'password' => bcrypt('password123'),
-        ]);
+        // Create test user manually (without factory to avoid Faker dependency)
+        if (!User::where('email', 'test@example.com')->exists()) {
+            User::create([
+                'name' => 'Test User',
+                'email' => 'test@example.com',
+                'password' => bcrypt('password123'),
+                'email_verified_at' => now(),
+            ]);
+        }
     }
 }
