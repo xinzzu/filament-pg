@@ -2,8 +2,12 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "build": "vite build",
-        "dev": "vite"
+        "build": "vite build && composer install --no-dev --optimize-autoloader",
+        "dev": "vite",
+        "heroku-postbuild": "npm run build"
+    },
+    "engines": {
+        "node": ">=16.0.0"
     },
     "devDependencies": {
         "autoprefixer": "^10.4.20",

@@ -1,0 +1,11 @@
+{
+  "name": "pg-card-mvp",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "bash build.sh",
+    "start": "php artisan serve --host=0.0.0.0 --port=$PORT"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
