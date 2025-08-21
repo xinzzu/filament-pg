@@ -5,7 +5,7 @@
     "buildCommand": "composer install --no-dev --optimize-autoloader && php artisan config:clear && php artisan route:clear && php artisan view:clear && php artisan storage:link && chmod -R 775 storage bootstrap/cache"
   },
   "deploy": {
-    "startCommand": "sleep 30 && php -r 'echo \"Waiting for MySQL...\"; for($i=0;$i<60;$i++){try{DB::connection()->getPdo();echo \"MySQL ready!\";break;}catch(Exception $e){sleep(2);}}' && php artisan migrate --force && php artisan db:seed --force && php artisan serve --host=0.0.0.0 --port=$PORT",
+    "startCommand": "sleep 30 && php -r 'echo \"Waiting for MySQL...\\n\"; for($i=0;$i<60;$i++){try{$pdo=new PDO(\"mysql:host=mysql.railway.internal;port=3306;dbname=railway\",\"root\",\"wZdrHVBeYDbdDnVgcckddvGkuDFHHUKL\");echo \"MySQL ready!\\n\";break;}catch(Exception $e){if($i==59){echo \"MySQL timeout: \".$e->getMessage().\"\\n\";exit(1);}sleep(2);}}' && php artisan migrate --force && php artisan db:seed --force && php artisan serve --host=0.0.0.0 --port=$PORT",
     "runtime": "V2",
     "numReplicas": 1,
     "sleepApplication": false,
