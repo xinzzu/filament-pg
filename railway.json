@@ -5,7 +5,7 @@
     "buildCommand": "composer install --no-dev --optimize-autoloader && php artisan config:clear && php artisan route:clear && php artisan view:clear && php artisan storage:link && chmod -R 775 storage bootstrap/cache"
   },
   "deploy": {
-    "startCommand": "sleep 30 && php -r 'echo \"Waiting for MySQL...\\n\"; for($i=0;$i<60;$i++){try{$pdo=new PDO(\"mysql:host=mysql.railway.internal;port=3306;dbname=railway\",\"root\",\"wZdrHVBeYDbdDnVgcckddvGkuDFHHUKL\");echo \"MySQL ready!\\n\";break;}catch(Exception $e){if($i==59){echo \"MySQL timeout: \".$e->getMessage().\"\\n\";exit(1);}sleep(2);}}' && php artisan migrate --force && php artisan db:seed --force && php artisan serve --host=0.0.0.0 --port=$PORT",
+    "startCommand": "sleep 30 && php -r 'echo \"[\" . date(\"Y-m-d H:i:s\") . \"] Starting MySQL connection test...\\n\"; for($i=1;$i<=60;$i++){echo \"[\" . date(\"Y-m-d H:i:s\") . \"] Attempt $i/60...\\n\"; try{$pdo=new PDO(\"mysql:host=mysql.railway.internal;port=3306;dbname=railway\",\"root\",\"wZdrHVBeYDbdDnVgcckddvGkuDFHHUKL\"); echo \"[\" . date(\"Y-m-d H:i:s\") . \"] ✅ MySQL connected successfully after $i attempts!\\n\"; break;}catch(Exception $e){echo \"[\" . date(\"Y-m-d H:i:s\") . \"] ❌ Failed: \" . $e->getMessage() . \"\\n\"; if($i==60){echo \"[\" . date(\"Y-m-d H:i:s\") . \"] 🚨 MySQL timeout after 120 seconds\\n\"; exit(1);} sleep(2);}}' && echo 'Starting Laravel migration...' && php artisan migrate --force && echo 'Migration completed, starting seeder...' && php artisan db:seed --force && echo 'Seeder completed, starting server...' && php artisan serve --host=0.0.0.0 --port=$PORT",
     "runtime": "V2",
     "numReplicas": 1,
     "sleepApplication": false,
